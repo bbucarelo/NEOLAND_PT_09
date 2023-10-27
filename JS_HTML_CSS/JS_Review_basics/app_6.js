@@ -15,6 +15,9 @@ const swapArray = (array, param1, param2) => {
     
     return copyArray;
     
+
+
+    
 }
     console.log(swapArray(array,1,2));
 
