@@ -39,7 +39,7 @@
             streamer.name.includes("u"))
                 console.log(streamersFilterU);
 
-//? Utiliza .filter() para generar un nuevo array con los streamers que incluyan 
+//? 5.5  Utiliza .filter() para generar un nuevo array con los streamers que incluyan 
 //? el caracter 'Legends' en su propiedad .gameMorePlayed. Recomendamos usar la funcion .includes() para la comprobación.
 //? Además, pon el valor de la propiedad .gameMorePlayed a MAYUSCULAS cuando .age sea mayor que 35.
 
@@ -50,8 +50,14 @@ const streamersLol = [
 	{name: 'AuronPlay', age: 33, gameMorePlayed: 'Among Us'}
 ];
 
-    const streamersLolFilter = streamersLol.filter(streamer => 
-        streamer.gameMorePlayed.includes("Legends"))
-            console.log(streamersLolFilter);
-    // falta evaluar 2da condición
-    
+    const streamersLolFilter = streamersLol.filter(streamer => {
+        if (streamer.gameMorePlayed.includes("Legends")) {
+        if (streamer.age > 35) {
+            streamer.gameMorePlayed = streamer.gameMorePlayed.toUpperCase();
+        }
+        return true;
+    }
+        return false; 
+});
+    console.log(streamersLolFilter);
+
