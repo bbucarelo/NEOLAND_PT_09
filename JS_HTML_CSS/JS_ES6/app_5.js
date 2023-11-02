@@ -61,3 +61,25 @@ const streamersLol = [
 });
     console.log(streamersLolFilter);
 
+//! Otra forma de hacerlo, con Laura
+
+const streamerss = [
+	{name: 'Rubius', age: 32, gameMorePlayed: 'Minecraft'},
+	{name: 'Ibai', age: 25, gameMorePlayed: 'League of Legends'},
+	{name: 'Reven', age: 43, gameMorePlayed: 'League of Legends'},
+	{name: 'AuronPlay', age: 33, gameMorePlayed: 'Among Us'}
+]
+    const streamerssFilter = streamerss.filter(streamer => {
+        return streamer.gameMorePlayed.includes("Legends")
+}) 
+    console.log(streamerssFilter);
+
+    for (let people of streamerssFilter) {
+        if (people.age > 35) {
+            people.gameMorePlayed = people.gameMorePlayed.toUpperCase();
+        
+    }
+            console.log(streamersFilter);
+      
+    }
+    
