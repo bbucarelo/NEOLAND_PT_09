@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    
+  }
+
+html {
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+body {
+    background-color: lightcyan
+     }
+
+main {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    color: black;
+}
+
+   ul {
+        padding-left: 2rem;
+    }
+    
+    ol {
+        padding-left: 2rem;
+    }
+  
+    .like {
+    color: green;
+    }
+
+    li {
+        color: crimson;
+        list-style-type: none;
+    }
+
+    .thunder {
+    color: purple;
+    }
+
+    a {
+        color: plum;
+        font-style: italic;
+    }
+
+    h3 {
+        font-style: italic;
+    }
+    
+    img {
+        border-radius: 1rem;
+        object-fit: cover; 
+    }
+    
+
+     
+  

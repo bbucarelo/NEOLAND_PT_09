@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+
+body {
+    background-color: rgb(43, 43, 43);
+    color: whitesmoke;
+    
+     }
+  
+  h1 {
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  li {
+    color: rgb(205, 203, 208);
+    font-style: italic; 
+  }

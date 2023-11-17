@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+
+  html {
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+body {
+    background-color: rgb(52, 52, 52);
+     }
+  
+  h1 {
+    color: whitesmoke;
+     }
+
+  p {
+    color: blue;
+  }
+  
+  li {
+    color: whitesmoke;
+     
+  }
