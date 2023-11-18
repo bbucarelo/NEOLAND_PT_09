@@ -1,0 +1,36 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"); 
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+        
+  }
+
+  html {
+    width: 100vw;
+    min-height: 100vh;
+  }
+  
+ body{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    
+  }
+
+  @font-face {
+    font-family: "Bergdool";
+    src: url("./assets/fonts/Bergdool.ttf") format("TrueType");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  h1 , h2{
+    font-family: "Bergdool", Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2cm;
+    text-align: center;
+  }
+
+  
+

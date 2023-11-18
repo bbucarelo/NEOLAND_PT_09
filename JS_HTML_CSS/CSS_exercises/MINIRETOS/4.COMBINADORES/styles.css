@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+html {
+    width: 100vw;
+    min-height: 100vh;
+  }
+  
+section p {
+    color: violet; /* Pongo violet para observar la diferencia */
+    font-style: italic;
+}
