@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+  }
+  
+    html {
+    width: 85vw;
+    min-height: 100vh;
+  }
+
+  .header  {
+    font-family: monospace;
+    background: #fa5252;
+    display: flex;
+    border: solid black;
+    }
+  
+  .logo {
+    font-weight: bold;
+    color:black;
+    background: #82c91e;
+    padding: 4px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: black;
+    border-style: solid;
+    margin: 42px;
+  }
+
+  li{
+    list-style-type: none; /* this removes the dots on the list items*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+  
+  ul {
+    font-weight: bold;
+    padding: 4px 32px;
+    display: flex;
+    margin:20px;
+    
+  }
+
+  a {
+    background-color: #784ff2;
+    padding: 8px;
+    list-style-type: none;
+    text-decoration: none; /* this removes the line under the links */
+    padding: 4px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: black;
+    border-style: solid;
+    margin:20px;
+  }   
