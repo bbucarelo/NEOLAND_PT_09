@@ -41,15 +41,15 @@
     color:#0797cc;
     margin-top: 50px;
     margin-bottom: 30px;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: bold;
   }
 
   ul {
     display: flex;
     list-style: none;
-    }
-    
+     }
+      
   li {
     flex: 1;
     text-align: center;
@@ -59,11 +59,23 @@
     margin-bottom: 50px;
     }
 
-  nav li:hover {
-    background-color: #006699;
+  section li {
+      color: white;
+      padding: 1rem;
+      border: 60px solid white;
+      margin: 0.2rem;
+      cursor: pointer; /
     }
+      
+  section li:hover {
+        background-color: #006699;
+      }
 
-    p {
+  nav li:hover {
+      background-color: #006699;
+      }
+
+  p {
         text-align: center;
         margin-left: 200px;
         margin-right: 200px;
@@ -74,6 +86,7 @@
     display:block;
     margin: 0 auto;
     }
+
    
   footer{
     background-color: #0099cc;

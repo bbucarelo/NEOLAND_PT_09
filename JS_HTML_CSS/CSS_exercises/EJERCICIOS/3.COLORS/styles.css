@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Open+Sans:wght@300&family=Ubuntu&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Gloria Hallelujah", sans-serif;
+    text-align: center; 
+  }
+
+  html {
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+  h1 {
+    color: #c92a2a;
+    font-size: 100px;
+  }
+
+  h2 {
+    color: #a61e4d;
+    font-size: 80px;
+  }
+
+  .first, .second {
+    color: #364fc7;
+  }
+
+  .second {
+    border-bottom: 1px solid #c92a2a;
+  }

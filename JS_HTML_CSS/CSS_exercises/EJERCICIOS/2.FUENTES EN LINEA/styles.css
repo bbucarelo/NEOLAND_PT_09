@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Ubuntu&display=swap"); 
+
+
+.myTitle{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
+    color: blue;
+    text-align: center;
+}
+
