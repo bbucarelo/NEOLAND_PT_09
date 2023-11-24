@@ -4,10 +4,6 @@ html, body {
   height: 100%;
 }
 
-* {
-    outline: 1px solid red;
-}
-
 body {
   font-family: Roboto, sans-serif;
   margin: 0;
@@ -24,12 +20,19 @@ body {
     border-radius: 10px;
     box-shadow: 2px 4px 16px rgba(0,0,0,.2);
     padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr) 15px;
+    grid-template-areas: 
+    "icon header header closebutton"
+    "text text text text"
+    "continuebutton cancelbutton - -"
      }
      
 .header{
-    font-size: 18px;
-    text-align: center;
-    
+  font-size: 14px;
+  align-self: center;
+  justify-content: center; /* Falta terminar de centrarlo */
+  grid-area: header;
 }
 
 .icon {
@@ -43,7 +46,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+  grid-area: icon;
+  }
 
 .close-button {
   background: #eee;
@@ -56,10 +60,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-area: closebutton;
 }
 
 .text {
     align-self: flex-start;
+    grid-area: text;
 
 }
 
@@ -86,11 +92,13 @@ button.continue {
   border: 1px solid royalblue;
   color: white;
   align-self: flex-start;
+  grid-area: continuebutton;
 }
 
 button.cancel {
   background: white;
   border: 1px solid #ddd;
   color: royalblue;
+  grid-area: cancelbutton;
   
 }
