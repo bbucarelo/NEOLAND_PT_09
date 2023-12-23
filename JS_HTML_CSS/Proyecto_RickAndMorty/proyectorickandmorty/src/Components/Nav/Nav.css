@@ -1,0 +1,8 @@
+.btn-nav {
+    height: 30px;
+    width: 100px;
+    margin: 0 1rem 0 1 rem;
+    background-color: white;
+    border: 1px rgba(0, 0, 0, 0) solid;
+    border-radius:10px;
+}
