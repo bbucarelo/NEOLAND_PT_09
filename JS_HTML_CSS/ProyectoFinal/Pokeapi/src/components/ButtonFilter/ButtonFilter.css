@@ -1,0 +1,26 @@
+#filterButton {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 80vw;
+    margin: 3rem 0 1rem 0;
+  }
+
+.buttonFilter {
+    font-size: small;
+    padding: .5rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: small;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 8px;
+
+  }
+  
+.buttonFilter:hover {
+    transform: scale(1.1);
+    }

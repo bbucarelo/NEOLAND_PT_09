@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Ubuntu&display=swap");
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+#hangmanDiv1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-size: 28px;
+    
+}
+#hangmanDiv2{
+    margin-top: 5rem;
+    min-width: 50vw;
+    min-height: 45vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 30px;
+    background-color: #FFFBF5;
+    
+}
+#hangmanImg{
+    width: 200px;
+    height: 200px;
+}
+#palabra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tituloHangman{
+    margin: 0.5rem;
+}
+.hangmanP{
+    width: 20px;
+    border-bottom: solid 2px black;
+    margin-right: 20px;
+    padding-bottom: 25px;
+}
+.hangmanPacertado{
+    width: 20px;
+    border-bottom: solid 2px black;
+    margin-right: 20px;
+}
+#hangmanInput{
+    border: 1px solid black;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin: 0.5rem;
+    font-size: 17px;
+    color: #333;
+    background-color: #FFFBF5;
+}
+
+#hangmanInput::placeholder{
+    color: #333;
+    font-size: 17px;
+}
+#hangmanComprobar{
+    border: 1px solid black;
+    background-color: #C3ACD0;
+    color: #333;
+    padding: 15px 20px;
+    margin: 0.5rem;
+    font-size: 17px;
+    border-radius: 10px;
+}
+#hangmanComprobar:hover{
+    background-color: #7743DB;
+    color: white;
+    cursor: pointer;
+}
+.guiones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and ( max-width: 640px){
+    #palabra{
+        flex-direction: column;
+        
+    }
+    #submit{
+        flex-direction: column;
+    }
+    #hangmanDiv2{
+        font-size: 18px; 
+    }
+
+    #hangmanDiv2{
+        min-width: 80vw;
+    }
+
+    #hangmanInput{
+    border: 1px solid black;
+    padding: 10px 30px;
+    border-radius: 10px;
+    margin: 1.5rem;
+    font-size: 12px;
+    display: flex;
+    }
+
+    #hangmanComprobar{
+        border: 1px solid black;
+        background-color: #C3ACD0;
+        color: #333;
+        padding: 10px 30px;
+        margin: 1px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+}

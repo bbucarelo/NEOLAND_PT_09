@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Ubuntu&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+#app, 
+html {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+header {
+height: 20vh;
+position: fixed;
+width: 100vw;
+
+}
+
+main {
+min-height: 90vh;
+padding-top: 20vh;
+
+}
+
+
+footer {
+height: 10vh;
+
+}
