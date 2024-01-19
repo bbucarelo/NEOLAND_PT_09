@@ -6,6 +6,7 @@ export * from "./dataPokemon";
 export * from "./filterDataPokemon";
 export * from "./typePokemon";
 export * from "./Hangman";
+export * from "./filterDataButton";
 
 //Archivos de barril 
 

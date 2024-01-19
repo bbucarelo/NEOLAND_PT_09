@@ -25,13 +25,13 @@ const template = () =>
 const getDataService = async () => {
   PrintSpinner();
     const data = await getDataServicePokemon(); //Esta es la del bucle de dataPokemon
-    // Variable para el filtro por tipo de pokemon PENDIENTE
     const types = typePokemon(data);
-    console.log(types);
+    //console.log(types);
     listeners(data);
-    // console.log(data);
     printGallery(data);
-    PrintButton(types);
+    PrintButton(types, data);
+    
+   
     document.getElementById("spinner").innerHTML = "";
     
 };
@@ -51,7 +51,9 @@ const listeners = (totalData) => {
     printGallery(filterData);
   });
 
+  
 };
+
 
 export const PrintPokemonPage = () => {
     document.querySelector("main").innerHTML = template ();

@@ -12,3 +12,5 @@ export const typePokemon = (totalPokemon) => {
 
     return nameTypeNoRepeat;
 };
+
+

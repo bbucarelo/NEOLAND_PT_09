@@ -1,8 +1,12 @@
+// esto es para el input
 
-
-export const filterDataPokemon = (data, wordInput) => {
+ export const filterDataPokemon = (data, wordInput) => {
+   console.log(data);
     const dataFiltrada = data.filter((pokemon)=>
-    pokemon.name.toLowerCase().includes(wordInput));
-    console.log(dataFiltrada);
+    pokemon.name.toLowerCase().includes(wordInput.toLowerCase()));
     return dataFiltrada;
 };
+
+
+
+
