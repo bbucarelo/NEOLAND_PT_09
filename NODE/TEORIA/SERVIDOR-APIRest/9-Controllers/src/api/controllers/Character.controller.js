@@ -240,5 +240,59 @@ const update = async(req, res, next) => {
     }
   };
 
-// Finalmente exportamos el Create
-    module.exports = { create, getAll, getById, getByName, update };
+//!--------------------------------------------------------------------------
+//?------------------- DELETE------------------------------------------------
+//!--------------------------------------------------------------------------
+
+//Debemos borrar el character cuyo ID se trae por params, este ID aparece en el array de characters en movie
+
+//Creamos la función asincrona, como siempre, además de la lógica de try y catch 
+
+const deleteCharacter = async (req, res, next) => {
+    try {
+      // Buscamos el id en los params
+      const { id } = req.params;
+  
+      // Buscamos y borramos el character
+      const character = await Character.findByIdAndDelete(id);
+  
+      if (character) {
+        // Si existe el character --> borramos los registros donde aparece
+        // Se debe comprobar si el character ha sido borrado
+        const characterDelete = await Character.findById(id);
+
+      //? Borramos los registros de character en los arrays de movie donde aparece:
+
+      try {
+        // 1º parametro es el filtro
+        // 2º acción --> sacar de characters el id de ese Character borrado
+        await Movie.updateMany(
+          { characters: id },
+          { $pull: { characters: id } }
+        );
+
+        // Verificamos que el character borrado no tengo la imagen por defecto para borrarla
+        character.image !==
+          "https://res.cloudinary.com/dhkbe6djz/image/upload/v1689099748/UserFTProyect/tntqqfidpsmcmqdhuevb.png" &&
+          deleteImgCloudinary(character.image);
+
+        // Lanzamos una respuesta dependiendo de si se ha encontrado el character borrado
+        return res.status(characterDelete ? 409 : 200).json({deleteTest: characterDelete ? false : true,
+        });
+        } catch (error) {
+        return res.status(409).json({error: "Error al borrar el character", message: error.message,
+        });
+      }
+    } else {
+      // lanzamos una respuesta 404 que el character no ha sido encontrado
+        return res.status(404).json("El character no ha sido encontrado");
+    }
+    } catch (error) {
+        return res.status(409).json({error: "Error al borrar el character", message: error.message,
+    });
+  }
+};
+
+
+// Finalmente exportamos todas las funciones usadas como controlador 
+    module.exports = { create, getAll, getById, getByName, update, deleteCharacter };

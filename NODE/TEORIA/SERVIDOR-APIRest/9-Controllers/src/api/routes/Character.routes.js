@@ -4,7 +4,7 @@ const { upload } = require("../../middleware/files.middleware");
 
 //?---------Importamos los controladores-------------------------------------------
 
-    const { create, getAll, getById, getByName, update } = require("../controllers/Character.controller");
+    const { create, getAll, getById, getByName, update, deleteCharacter } = require("../controllers/Character.controller");
 
 //?----- Se crea un router especifico para Character-------------------------------
 // Al llamarlo disponemos de todas las rutas y luego será llamado en el index------
@@ -21,6 +21,7 @@ CharacterRouter.get("/getAll", getAll);
 CharacterRouter.get("/getById/:id", getById);
 CharacterRouter.get("/getByName/:name", getByName);
 CharacterRouter.patch("/update/:id", update);
+CharacterRouter.delete("/delete/:id", deleteCharacter);
 
 
 //?--------------Exportamos la función creada---------------------------------------
