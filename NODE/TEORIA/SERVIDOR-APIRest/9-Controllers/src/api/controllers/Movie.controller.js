@@ -1,5 +1,6 @@
-const Movie = require("../models/Movie.model")
-const Character = require("../models/Character.model")
+
+const Character = require("../models/Character.model");
+const Movie = require("../models/Movie.model");
 
 //!--------------------------------------------------------------------------
 //?------------------- POST - CREATE-----------------------------------------
@@ -21,9 +22,170 @@ const createMovie = async(req, res, next) => {
             return res.status(409).json("No se ha podido crear la Movie");
         }
     } catch (error) {
-        return res.status(409).json({error: "Error en la creación de la nueva Movie", message: error.message,});
+        return res.status(409).json({
+            error: "Error en la creación de la nueva Movie", 
+            message: error.message,
+        });
     }
 };
+
+//!--------------------------------------------------------------------------
+//?------------------- GET - GET ALL-----------------------------------------
+//!--------------------------------------------------------------------------
+
+const getAll = async(req, res, next) => { //Función como siempre asíncrona
+    //Insertamos lógica del try - catch
+    try { // Buscamos todos los elemnentos de la colección
+        const allMovies = await Movie.find();
+        if(allMovies.length > 0) {
+            //Si hay registros se lanza respuesta correcta
+            return res.status(200).json(allMovies)
+        } else {
+            // Si no hay registros lanzamos un 404
+            return res.status(404).json("No se han encontrado las películas");
+        }
+    //Capturamos el error, si lo hay     
+    } catch (error) { 
+        return res.status(409).json({
+            error: "Error al buscar las películas",
+            message: error.message
+        });
+    }
+};
+
+//!--------------------------------------------------------------------------
+//?------------------- GET - GET by ID---------------------------------------
+//!--------------------------------------------------------------------------
+
+const getById = async(req, res, next) => {
+    try { //Seguimos misma lógica anterior pero para un ID
+    // Hacemos destructuring del id traído por params
+        const {id} = req.params;
+    //Encontramos la movie que tenga ese ID con método findbyid
+        const movieById = await Movie.findById(id);
+    //Comprabamos si se ha encontrado la movie
+        if (movieById) {
+            return res.status(200).json(movieById);
+        } else {
+            return res.status(404).json("No se ha encontrado la película");
+        }     
+    } catch (error) {
+        return res.status(409).json({
+            error: "Error al buscar por ID",
+            message: error.message
+        });
+    }
+};
+
+//!--------------------------------------------------------------------------
+//?------------------- GET - GET by NAME-------------------------------------
+//!--------------------------------------------------------------------------
+
+const getByName = async(req, res, next) => {
+    try {
+        //Misma lógica del ID pero ahora con NAME
+        const {name} = req.params;
+        const movieByName = await Movie.find({ name });
+            if (movieByName.length >  0) {
+                return res.status(200).json(movieByName);
+            } else {
+                return res.status(404).json("No se ha encontrado el nombre de la película");
+            }
+    } catch (error) {
+        return res.status(409).json({
+            error: "Error al encontrar la película",
+            message: error.message
+        });
+    }
+};
+
+//!--------------------------------------------------------------------------
+//?------------------- PATCH - UPDATE----------------------------------------
+//!--------------------------------------------------------------------------
+
+const update = async(req, res, next) => {
+
+    try {
+        await Movie.syncIndexes();
+        //Traemos el id del la movie a actualizar
+        const {name} = req.params;
+        //Buscamos la pelicula
+        const movieById = await Movie.findById(id);
+        //Hacemos un condicional de modo que si la movie existe en la DB se pueda actualizar
+            if(movieById) {
+                //Creamos un body custom con los datos, si los hay, del body
+                const bodyCustom = {
+                    _id: movieById._id,
+                    name: req.body?.name ? req.body?.name : movieById.name,
+                    year: req.body?.year ? req.body?.year : movieById.year
+            };
+
+    try {
+                await Movie.findByIdAndUpdate(id, bodyCustom);
+            
+    
+    //? -------------------------------------------------------------------
+    //! TESTEAMOS EN TIEMPO REAL QUE ESTO SE HAYA REALIZADO CORRECTAMENTE--
+    //? -------------------------------------------------------------------       
+
+        //Buscamos el elemento movie actualizado mediante el id
+            const movieByIdUpdate = await Movie.findById(id);
+        // Cogemos el req.body y le sacamos las CLAVES para saber que elementos han actualizado
+            const elementUpdate = Object.keys(req.body);
+        // Creamos un objeto vacío donde vamos a meter este test
+            let test = {};
+        // Recorremos las claves del body y rellenamos el objeto test
+            elementUpdate.forEach((item) => {
+        // Compruebo el valor de las claves del body con los valores del character actualizado
+                if (req.body[item] === movieByIdUpdate[item]) {
+                test[item] = true;
+                } else {
+                test[item] = false;
+                }
+            });
+
+        // Comprobamos que ninguna clave del test este en false, si hay alguna lanzamos un 409 porque alguna
+        // clave no se ha actualizado de forma correcta , si estan todas en true lanzamos un 200 que esta todo correcto
+
+            let acc = 0;
+
+            for (const key in test) {
+            // si esto es false añadimos uno al contador
+            test[key] === false && acc++;
+            }
+
+        // si acc es mayor que 0 lanzamos error porque hay alguna clave en false y eso es que no se ha actualizado
+
+            if (acc > 0) {
+                return res.status(409).json({ dataTest: test, update: false });
+            } else {
+                return res
+                .status(200)
+                .json({ dataTest: test, update: movieByIdUpdate
+                });
+            }
+
+            } catch (error) {
+                return res.status(409).json({
+                error: "No se ha podidio actualizar",
+                message: error.message,
+            });
+            }
+
+            } else {
+            // si la movie con ese id no existe
+            return res.status(404).json("La película no ha sido encontrada");
+      }
+    } catch (error) {
+      return res
+        .status(409).json({ 
+        error: "No se ha podidio actualizar", 
+        message: error.message 
+    });
+    }
+    };
+
+
 
 //!--------------------------------------------------------------------------
 //?------------------- PATCH - TOGGLE----------------------------------------
@@ -121,6 +283,52 @@ const toggleCharacters = async(req, res, next) => {
                 }
                 };
 
+//!--------------------------------------------------------------------------
+//?------------------- DELETE------------------------------------------------
+//!--------------------------------------------------------------------------
+
+//Debemos borrar la movie cuyo ID se trae por params 
+//para no tener inconsistencias de datos, hay que borrar el registro del id en los campos donde aparece
+//Creamos la función asincrona, como siempre, además de la lógica de try y catch 
+
+const deleteMovie = async (req, res, next) => {
+    try {
+    // Buscamos el id en los params
+        const { id } = req.params;
+    // Buscamos y borramos la movie
+        const movie = await Movie.findByIdAndDelete(id);
+
+        if(movie) {
+        // Si existe la movie --> borramos los registros donde aparece
+        // Se debe comprobar si la movie ha sido borrada
+        const movieDelete = await Movie.findById(id);
+    //? Borramos los registros de movie en los arrays de movie donde aparece:
+        try {
+            await Movie.updateMany(
+            { movie: id },
+            { $pull: { movies: id } }
+            );
+
+// Lanzamos una respuesta dependiendo de si se ha encontrado la movie borrada
+        return res.status(movieDelete ? 409 : 200).json({deleteTest: movieDelete ? false : true,
+        });
+        
+    } catch (error) {
+        return res.status(409).json({error: "Error al borrar la movie", message: error.message,});
+    }
+    } else {
+      // lanzamos una respuesta 404 que la movie no ha sido encontrada
+        return res.status(404).json("La película no ha sido encontrada");
+    }
+    } catch (error) {
+        return res.status(409).json({
+        error: "Error al borrar la película", 
+        message: error.message,
+    });
+  }
+};
+
+
 //? Guardamos y exportamos las funciones creadas
 
-module.exports = { createMovie, toggleCharacters };
+module.exports = { createMovie, toggleCharacters, getAll, getById, getByName, update, deleteMovie };
