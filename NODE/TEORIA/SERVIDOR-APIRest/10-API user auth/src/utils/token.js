@@ -25,7 +25,7 @@ const verifyToken = (token) => {
     if(!token) {
         throw new Error("Sin token");
     }
-    return jwt.verify(token, procces.env.JWT_SECRET);
+    return jwt.verify(token, process.env.JWT_SECRET);
 };
 
 //?---------Exportamos---------------------------------------------------
