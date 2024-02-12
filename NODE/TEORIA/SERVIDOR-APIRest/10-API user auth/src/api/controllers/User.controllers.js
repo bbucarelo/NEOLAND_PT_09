@@ -219,8 +219,8 @@ const resendCode = async (req, res, next) => {
     const mailOptions = {
         from: emailENV,
         to: req.body.email, //Envío al usuario que se ha registrado
-        subject: "Confirmation Code",
-        text: `Su código de confirmación es ${userSave.confirmationCode}, gracias por confiar en nosotros.`,
+        subject: "Confirmation Code part. 2",
+        text: `¡No pasa nada, ya casi terminamos! Te enviamos nuevamente tu código de registro, pues hemos recibido una solicitud de reenvío de tu código de acceso y es: ${userSave.confirmationCode}`,
     };
     //Enviamos el email
     transporter.sendMail(mailOptions, (error, info) => {
