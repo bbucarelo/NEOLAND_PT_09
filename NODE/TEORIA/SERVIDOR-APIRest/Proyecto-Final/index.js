@@ -29,6 +29,12 @@ app.use(express.urlencoded({limit: "5mb", extended: false}));
 const UserRoutes = require("./src/api/routes/User.routes");
 app.use("/api/v1/user", UserRoutes);
 
+const ProjectsRoutes = require("./src/api/routes/Projects.routes");
+app.use("/api/v1/projects", ProjectsRoutes);
+
+const DivisionRoutes = require("./src/api/routes/Division.routes");
+app.use("/api/v1/division", DivisionRoutes);
+
 
 //?-----------Generamos error cuando no se encuentra la ruta----------------
 

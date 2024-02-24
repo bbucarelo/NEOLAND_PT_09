@@ -16,13 +16,14 @@ const UserSchema = new mongoose.Schema(
             trim: true,
             unique: true, //Para que no haya dos usuarios iguales
         },
+
         email: {
             type: String,
             required: true,
             trim: true, //No haya espacios
             unique: true,
-            validate: [validator.isEmail, "Email no válido"],
-        },
+            validate: [validator.isEmail, "Email no válido"]},
+
         password: {
             type: String,
             required: true,
@@ -32,38 +33,21 @@ const UserSchema = new mongoose.Schema(
         gender: {
             type: String,
             enum: ["hombre", "mujer", "otro"],
-            required: false,
-        },
-        rol: {
-            type: String,
+            required: false},
+
+        rol: {type: String,
             enum: ["empleado", "jefe", "gerente"],
-            default: "empleado",
-        },
-        confirmationCode: {
-            type: Number,
-        },
-        check: {
-            type: Boolean,
-            default: false,
-        },
-        image: {
-            type: String,
-        },
-        position:{
-            type: String,
-        },
-        seniority:{
-            type: Date,
-        },
-        location: {
-            type: String,
-        },
-        division: {
-            type: mongoose.Schema.Types.ObjectId, ref: "Division", 
-        },
-        project: [{ 
-            type: mongoose.Schema.Types.ObjectId, ref: "Projects",
-        }],
+            default: "empleado"},
+
+        confirmationCode: {type: Number},
+        check: {type: Boolean, default: false},
+        image: {type: String},
+        position: {type: String},
+        seniority: {type: Date},
+        location: {type: String},
+        projectOwner: {type: String},
+        division: {type: mongoose.Schema.Types.ObjectId, ref: "Division"},
+        project: [{type: mongoose.Schema.Types.ObjectId, ref: "Projects"}],
 
     },
     {

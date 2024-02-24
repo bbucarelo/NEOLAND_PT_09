@@ -43,7 +43,7 @@ const token = req.headers.authorization?.replace("Bearer ", ""); //Obtención de
         req.user = await User.findById(decoded.id); 
     //Ahora se comprueba que el rol sea de admin 
     if (req.user.rol !== "jefe") {
-        return next(new Error("No autorizado, no eres admin/jefe"));
+        return next(new Error("No autorizado, no eres Admin/Jefe"));
       } else {
         next();
       }
@@ -53,8 +53,8 @@ const token = req.headers.authorization?.replace("Bearer ", ""); //Obtención de
 };
 
 //?-------------------Función para comprobar la autenticación del usuario ADMIN/JEFE > control-----------------------
-//! CONSULTAR 
-/* const isAuthGerente = async(req, res, next) => {
+
+ const isAuthGerente = async(req, res, next) => {
     //Siguiendo los mismos pasos que en la función anterior
     const token = req.headers.authorization?.replace("Bearer ", ""); //Obtención del token con metodo de JS 
         //Comprobamos si trae correctamente el token 
@@ -67,7 +67,7 @@ const token = req.headers.authorization?.replace("Bearer ", ""); //Obtención de
             req.user = await User.findById(decoded.id); 
         //Ahora se comprueba que el rol sea de admin 
         if (req.user.rol !== "gerente") {
-            return next(new Error("No autorizado, no eres admin/gerente"));
+            return next(new Error("No autorizado, no eres superAdmin/Gerente"));
           } else {
             next();
           }
@@ -75,9 +75,9 @@ const token = req.headers.authorization?.replace("Bearer ", ""); //Obtención de
             return res.status(409).json({error: "Ha ocurrido un problema al generar el token", message: error.message});
         }    
     };
-*/
+
 
 //?---------------Exportaciones-----------------------------------------------------------------------------------------
 
-module.exports = { isAuth, isAuthAdmin};
+module.exports = { isAuth, isAuthAdmin, isAuthGerente};
 
