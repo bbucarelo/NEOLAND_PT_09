@@ -35,7 +35,6 @@ app.use("/api/v1/projects", ProjectsRoutes);
 const DivisionRoutes = require("./src/api/routes/Division.routes");
 app.use("/api/v1/division", DivisionRoutes);
 
-
 //?-----------Generamos error cuando no se encuentra la ruta----------------
 
 app.use("*", (req, res, next) => {

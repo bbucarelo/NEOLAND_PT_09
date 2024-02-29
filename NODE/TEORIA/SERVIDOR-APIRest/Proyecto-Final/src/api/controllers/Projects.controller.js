@@ -3,7 +3,6 @@
 const User = require("../models/User.model");
 const Projects = require("../models/Projects.model");
 const Division = require("../models/Division.model");
-const Comment = require("../models/Comment.model");
 const enumOk = require("../../utils/enumOk");
 
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,22 +106,23 @@ const getByName = async (req, res, next) => {
   };
 
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//?----------------------------------------------------------- GET - GET by LOCATION -----------------------------------------------------------------------------------
+//?----------------------------------------------------------- GET - GET by Work Vertical ------------------------------------------------------------------------------
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-const getByLocation = async (req, res, next) => {
+const getByWorkVertical = async (req, res, next) => {
     try {
-    // Hacemos destructuring del name traido por params
-    const { location } = req.params;
+    // Hacemos destructuring de la vertical traida por params
+    const { workVertical } = req.params;
+    //console.log(workVertical);
   
-    // Buscamos el proyecto que coincida en el name
-    const projectsByLocation = await Projects.find({ location });
-      //console.log(projectsByLocation);
+    // Buscamos el proyecto que coincida en la vertical
+    const projectsByWorkVertical = await Projects.find({ workVertical });
+      
   
-    if (projectsByLocation.length > 0) {
-        return res.status(200).json(projectsByLocation);
+    if (projectsByWorkVertical.length > 0) {
+        return res.status(200).json(projectsByWorkVertical);
     } else {
-        return res.status(404).json("No se han encontrado proyectos con esa ubicación");
+        return res.status(404).json("No se han encontrado proyectos con esa vertical de negocio");
     }
     } catch (error) {
         return res
@@ -254,8 +254,189 @@ const deleteProject = async (req, res, next) => {
     }
 };
 
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------------- PATCH - TOGGLE USER -------------------------------------------------------------------------------------
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//? Le pasamos el ID de PROYECTO por el params y el ID de USUARIOS por el body 
+const toggleUsuarios = async (req, res, next) => {
+    try {
+  
+      // EL DEL PROYECTO
+      const { id } = req.params;
+      //USUARIO
+      const { usuarios } = req.body; 
+  
+  
+      const proyectosById = await Projects.findById(id);
+      if (proyectosById) {
+        const arrayUsuarios = usuarios.split(",");
+  
+        Promise.all(
+          arrayUsuarios.map(async (usuario) => {
+            if (proyectosById.user.includes(usuario)) {
+  
+              try {
+                await Projects.findByIdAndUpdate(id, {
+                  $pull: { user: usuario },
+                });
+  
+                try {
+                  await User.findByIdAndUpdate(usuario, {
+                    $pull: { project: id },
+                  });
+                } 
+                
+                
+                catch (error) {
+                  return res.status(409).json({
+                    error: "Error al desenlazar el usuario del proyecto",
+                    message: error.message,
+                  });
+                }
+              } catch (error) {
+                return res.status(409).json({
+                  error: "Error al desenlazar el proyecto del usuario",
+                  message: error.message,
+                });
+              }
+            } else {
+  
+  
+  
+              try {
+  
+                await Projects.findByIdAndUpdate(id, {
+                  $push: { user: usuario },
+                });
+  
+                try {
+  
+                    await User.findByIdAndUpdate(usuario, {
+                    $push: { project: id },
+                  });
+
+                } catch (error) {
+                  return res.status(409).json({
+                    error: "Error al enlazar el usuario al proyecto",
+                    message: error.message,
+                  });
+                }
+              } catch (error) {
+                return res.status(409).json({
+                  error: "Error al enlazar el proyecto al usuario",
+                  message: error.message,
+                });
+              }
+            }
+          })
+        ).then(async () => {
+          return res
+            .status(200)
+            .json(await Projects.findById(id).populate("user"));
+        });
+      } else {
+  
+        return res.status(404).json("Proyecto no encontrado, prueba con otro id");
+      }
+    } catch (error) {
+      return res
+        .status(409)
+        .json({ error: 'Error al actualizar el proyecto.', message: error.message });
+    }
+  };     
+
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------------- PATCH - TOGGLE DIVISION ---------------------------------------------------------------------------------
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const toggleDivision = async (req, res, next) => {
+
+try {
+
+  //ID del proyecto
+  const { id } = req.params;
+  // Division 
+  const { divisiones } = req.body;
+
+  const proyectosById = await Projects.findById(id);
+    if (proyectosById) {
+      const arrayDivisiones = divisiones.split(",");
+
+      Promise.all(
+        arrayDivisiones.map(async (div) => {
+          if(proyectosById.division.includes(div)) {
+
+            try{
+              await Projects.findByIdAndUpdate(id, {
+                $pull: { division: div },
+              });
+
+              try{
+                await Division.findByIdAndUpdate(div, {
+                  $pull: { projects: id},
+                });
+              
+
+              } catch (error) {
+                return res.status(409).json({
+                  error: "Error al desenlazar la division del proyecto",
+                  message: error.message,
+                });
+              }
+            } catch (error) {
+              return res.status(409).json({
+                error: "Error al desenlazar el proyecto de la division",
+                message: error.message,
+              });
+            }
+          } else {
+
+            try {
+
+              await Projects.findByIdAndUpdate(id, {
+                $push: { division: div },
+              });
+              
+              try {
+                await Division.findByIdAndUpdate(div, {
+                  $push: { projects: id},
+                });
+
+              } catch(error) {
+                return res.status(409).json({
+                  error: "Error al enlazar la division al proyecto",
+                  message: error.message,
+                });
+              }
+            } catch (error) {
+              return res.status(409).json({
+                error: "Error al enlazar el proyecto a la division",
+                message: error.message,
+              });
+            }
+          }
+        })
+      ).then(async () => {
+        return res
+            .status(200)
+            .json(await Projects.findById(id).populate("division"));
+        });
+      } else {
+        return res.status(404).json("Proyecto no encontrado, prueba con otro id");
+      }
+  } catch (error) {
+    return res
+        .status(409)
+        .json({ error: 'Error al actualizar el proyecto.', message: error.message });
+  }
+};
 
 
 
-//?-------------------Exportamos funciones--------------------------
-module.exports = {createProject, getAll, getById, getByName, getByLocation, updateProject, deleteProject};
+//?----------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------Exportamos funciones----------------------------------------------------------
+
+    module.exports = {createProject, getAll, getById, getByName, getByWorkVertical,
+                      updateProject, deleteProject, toggleUsuarios, toggleDivision };

@@ -6,10 +6,10 @@ const Schema = mongoose.Schema;
 const DivisionSchema = new Schema (
     {
         name: {type: String, required: true, unique: true},
-        location: {type: String, required: false}, //Quiero que sea un array de ubicaciones dentro de la division. CONSULTAR.
-        headOfDivision: {type: String, required: true},
+        location: {type: String, required: false}, 
         workVertical: {type: String, required: true,
         enum: ["Healthcare", "Production", "Pharma", "Building"]},
+        revenue: {type: Number},
         user: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Projects" }],
     },

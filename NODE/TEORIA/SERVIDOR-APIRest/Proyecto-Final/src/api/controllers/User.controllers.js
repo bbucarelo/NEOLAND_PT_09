@@ -540,8 +540,31 @@ const deleteUser = async (req, res, next) => {
     }
   };
 
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------------- GET - GET ALL -------------------------------------------------------------------------------------------
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const getAll = async (req, res, next) => {
+    try {
+    // Traemos todos los elementos de la coleccion
+    const allUsers = await User.find();
+        if (allUsers.length > 0) {
+        // Si hay registros lanzamos una respuesta correcta
+            return res.status(200).json(allUsers);
+        } else {
+        // si no hay registros lanzamos una respuesta 404
+            return res.status(404).json("No se han encontrado a los usuarios");
+        }
+    } catch (error) {
+      // Captura del error
+      return res
+        .status(409).json({ error: "Error al buscar los usuarios", message: error.message });
+    }
+  };
+
+
 
 //?---------------------------------------------------------------------Funciones a exportar------------------------------------------------------------------------------------
 
-module.exports = { registerWithRedirect, sendCode, resendCode, checkNewUser, login, autoLogin, forgotPassword, sendPassword, changePassword, updateUser, deleteUser };
+module.exports = { registerWithRedirect, sendCode, resendCode, checkNewUser, login, autoLogin, forgotPassword, sendPassword, changePassword, updateUser, deleteUser, getAll };
 

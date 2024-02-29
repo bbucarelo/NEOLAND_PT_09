@@ -7,11 +7,9 @@ const ProjectsSchema = new Schema (
     {
         name: {type: String, required: true, unique: true},
         projectDescription: {type: String, required: false},
-        projectOwner: {type: String, required: true, unique: true},
         startDate: {type: Date, require: false},
         finishDate: {type: Date, require: false},
-        location: {type: String, required: false},
-        status: {type: String, enum: ["Planificación", "Desarrollo", "Evaluación", "Control", "Cierre"]},
+        estatus: {type: String, enum: ["Planificación", "Desarrollo", "Evaluación", "Control", "Cierre"]},
         clients: {type: String, required: false},
         documentation: {type: String, required: false},
         workVertical: {type: String,

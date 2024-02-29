@@ -2,7 +2,7 @@
 const User = require("../models/User.model");
 const Projects = require("../models/Projects.model");
 const Division = require("../models/Division.model");
-const Comment = require("../models/Comment.model")
+
 
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //?----------------------------------------------------------- POST - CREATE -------------------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ const getByName = async (req, res, next) => {
 
 const getByWorkVertical = async (req, res, next) => {
     try {
-    // Hacemos destructuring del name traido por params
+    // Hacemos destructuring de la vertical traido por params
     const { workVertical } = req.params;
   
     // Buscamos el proyecto que coincida con la vertical
@@ -239,9 +239,182 @@ const deleteDivision = async (req, res, next) => {
     }
 };
 
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------------- PATCH - TOGGLE PROJECT ----------------------------------------------------------------------------------
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+const toggleProject = async (req, res, next) => {
+
+    try {
+        //ID de la division 
+        const { id } = req.params;
+        // Proyecto
+        const { proyectos } = req.body;
+
+        const divisionesById = await Division.findById(id);
+            if (divisionesById) {
+                const arrayProjects = proyectos.split(",");
+
+                Promise.all(
+                    arrayProjects.map(async (proyecto) => {
+                        if(divisionesById.projects.includes(proyecto)) {
+
+                            try {
+                                await Division.findByIdAndUpdate(id, {
+                                    $pull: { projects: proyecto },
+                                });
+
+                                try {
+                                    await Projects.findByIdAndUpdate(proyecto, {
+                                        $pull: { division: id },
+                                    });
+
+
+                                } catch (error) {
+                                    return res.status(409).json({
+                                        error: "Error al desenlazar la division del proyecto",
+                                        message: error.message,
+                                      });
+                                }
+                            } catch (error) {
+                                return res.status(409).json({
+                                    error: "Error al desenlazar el proyecto de la division",
+                                    message: error.message,
+                                  });
+                            }
+                        } else {
+
+                                try {
+                                    await Division.findByIdAndUpdate(id, {
+                                        $push: { projects: proyecto },
+                                    });
+                                
+                                    try {
+                                        await Projects.findByIdAndUpdate(proyecto, {
+                                            $push: { division: id },
+                                        });
+
+                                    } catch (error) {
+                                        return res.status(409).json({
+                                            error: "Error al enlazar la division al proyecto",
+                                            message: error.message,
+                                          });
+                                    }
+                                } catch (error) {
+                                    return res.status(409).json({
+                                    error: "Error al enlazar el proyecto a la division",
+                                    message: error.message,
+                                    });
+                                }
+                            }
+                        })
+                    ).then(async () => {
+                        return res
+                            .status(200)
+                            .json(await Division.findById(id).populate("projects"));
+                        });
+            } else {
+                return res.status(404).json("División no encontrada, prueba con otro id");
+            }
+    } catch (error) {
+        return res
+        .status(409)
+        .json({ error: 'Error al actualizar la división.', message: error.message });
+    }
+};
+
+
+
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------------- PATCH - TOGGLE USER -------------------------------------------------------------------------------------
+//!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const toggleUser = async (req, res, next) => {
+
+try {
+    
+    // EL DEL PROYECTO
+    const { id } = req.params;
+    //USUARIO
+    const { usuarios } = req.body; 
+
+    const divisionesById = await Division.findById(id);
+    if (divisionesById) {
+        const arrayUsuarios = usuarios.split(",");
         
+        Promise.all(
+            arrayUsuarios.map(async (usuario) => {
+                if(divisionesById.user.includes(usuario)) {
+
+                    try {
+                        await Division.findByIdAndUpdate(id, {
+                            $pull: { user: usuario },
+                        });
+
+                        try {
+                            await User.findByIdAndUpdate(usuario, {
+                                $pull: { division: id },
+                            }); 
+                        }
+
+                    catch (error) {
+                        return res.status(409).json({
+                            error: "Error al desenlazar el usuario de la división",
+                            message: error.message,
+                          });
+                    }
+                } catch (error) {
+                    return res.status(409).json({
+                        error: "Error al desenlazar la división del usuario",
+                        message: error.message,
+                      });
+                    }
+                } else {
+
+
+                    try {
+                        await Division.findByIdAndUpdate(id, {
+                            $push: { user: usuario },
+                        });
+
+                        try {
+                            await User.findByIdAndUpdate(usuario, {
+                                $push: { division: id },
+                            }); 
+
+                        } catch (error) {
+                            return res.status(409).json({
+                                error: "Error al enlazar el usuario de la división",
+                                message: error.message,
+                              });
+                        }
+                    } catch (error) {
+                        return res.status(409).json({
+                            error: "Error al enlazar la división del usuario",
+                            message: error.message,
+                          });
+                    }
+                }
+            })
+        ).then(async () => {
+            return res
+            .status(200)
+            .json(await Division.findById(id).populate("user"));
+        });
+    } else {
+        return res.status(404).json("División no encontrada, prueba con otro id"); 
+    }
+} catch (error) {
+    return res
+        .status(409)
+        .json({ error: 'Error al actualizar la division.', message: error.message });
+    }
+};
+      
  
 
-//?-------------------Exportamos funciones--------------------------
-module.exports = { createDivision, getAll, getById, getByName, getByWorkVertical, updateDivision, deleteDivision };
+//?----------------------------------------------------------------------------------------------------------------------------------
+//?----------------------------------------------------Exportamos funciones----------------------------------------------------------
+
+    module.exports = { createDivision, getAll, getById, getByName, getByWorkVertical, 
+                        updateDivision, deleteDivision, toggleProject, toggleUser };

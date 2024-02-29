@@ -6,7 +6,9 @@ const { isAuthAdmin, isAuthGerente } = require("../../middleware/auth.middleware
 //?---------------------Router especifico de Project--------------------------------
 
 const express = require("express");
-const { createProject, getAll, getById, getByName, getByLocation, updateProject, deleteProject } = require("../controllers/Projects.controller");
+const { createProject, getAll, getById, getByName, updateProject, deleteProject, 
+        toggleUsuarios, getByWorkVertical, toggleDivision } = require("../controllers/Projects.controller");
+        
 const ProjectsRoutes = express.Router();
 
 //?---------------------------------Rutas simples-----------------------------------
@@ -14,14 +16,16 @@ const ProjectsRoutes = express.Router();
 ProjectsRoutes.get("/getAll/", getAll);
 ProjectsRoutes.get("/getById/:id", getById);
 ProjectsRoutes.get("/getByName/:name", getByName);
-ProjectsRoutes.get("/getByLocation/:location", getByLocation);
+ProjectsRoutes.get("/getByVertical/:workVertical", getByWorkVertical );
 
 
 //?---------------------------------Rutas Autenticadas------------------------------
 
-ProjectsRoutes.post("/create", [isAuthAdmin] ,createProject);
+ProjectsRoutes.post("/create", [isAuthGerente] ,createProject);
 ProjectsRoutes.patch("/update/:id", [isAuthAdmin], updateProject); 
-ProjectsRoutes.delete("/delete/:id", [isAuthAdmin], deleteProject); 
+ProjectsRoutes.delete("/delete/:id", [isAuthGerente], deleteProject); 
+ProjectsRoutes.patch("/toggle/:id", [isAuthAdmin], toggleUsuarios);
+ProjectsRoutes.patch("/toggleDiv/:id", [isAuthAdmin], toggleDivision);
 
 
 //?-------------------------------------Exportamos-----------------------------------
