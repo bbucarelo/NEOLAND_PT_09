@@ -45,7 +45,6 @@ const UserSchema = new mongoose.Schema(
         position: {type: String},
         seniority: {type: Date},
         location: {type: String},
-        projectOwner: {type: String},
         division: {type: mongoose.Schema.Types.ObjectId, ref: "Division"},
         project: [{type: mongoose.Schema.Types.ObjectId, ref: "Projects"}],
 

@@ -1,4 +1,4 @@
-const { isAuth } = require("../../middleware/auth.middleware");
+const { isAuth, isAuthGerente, isAuthAdmin } = require("../../middleware/auth.middleware");
 const { upload } = require("../../middleware/files.middleware");
 const { registerWithRedirect, sendCode, resendCode, checkNewUser, login, autoLogin, forgotPassword, 
         sendPassword, changePassword, updateUser, deleteUser, getAll } = require("../controllers/User.controllers");
@@ -19,8 +19,8 @@ UserRoutes.get("/getAll/", getAll);
 //?------------------------------------------------- Rutas autenticadas----------------------------------------------------------------------------
 
 UserRoutes.patch("/changePassword", [isAuth], changePassword);
-UserRoutes.patch("/updateUser", [isAuth], upload.single("image"), updateUser); //Para poder cambiar la imagen debo añadir el multer upload.single
-UserRoutes.delete("/deleteUser", [isAuth], deleteUser);
+UserRoutes.patch("/updateUser", [isAuthAdmin], upload.single("image"), updateUser); //Solo puede actualizar un admin -- Para poder cambiar la imagen debo añadir el multer upload.single
+UserRoutes.delete("/deleteUser", [isAuthGerente], deleteUser); //Solo puede eliminar un super rol
 
 //?----------------------------------------- Controladores usados por redirect---------------------------------------------------------------------
 

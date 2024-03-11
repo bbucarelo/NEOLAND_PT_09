@@ -19,7 +19,7 @@ const enumOk = require("../../utils/enumOk");
 const registerWithRedirect = async(req, res, next) => {
     let catchImg = req.file?.path
     try {
-        await User.syncIndexes();
+        await User.syncIndexes(); // Los índices se actualizan automática por mongoDB para reflejar los cambios.
         let confirmationCode = randomCode();
         //Buscamos si hay algún usuario existente con ese nombre y email en la DB
         const userExist = await User.findOne(
