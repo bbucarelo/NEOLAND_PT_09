@@ -11,6 +11,8 @@ const randomCode = require("../../utils/randomCode");
 const { generateToken } = require("../../utils/token");
 const randomPassword = require("../../utils/randomPassword");
 const enumOk = require("../../utils/enumOk");
+const Projects = require("../models/Projects.model");
+const Division = require("../models/Division.model");
 
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //?---------------------------------------------------------------------------REGISTER REDIRECT-------------------------------------------------------------------------
@@ -518,28 +520,52 @@ const updateUser = async(req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
     try {
-    // Buscar al user por el id y borrarlo
-     await User.findByIdAndDelete(req.user._id);
-    // Buscamos al user borrado para verificar que se ha borrado
-    const existUser = await User.findById(req.user._id);
-    // Si el user no existe se ha borrado correctamente y habria que borrar la imagen si no es la que hay por defecto
+        const userId = req.body._id;
+
+        // Borrar usuario
+        await User.findByIdAndDelete(userId);
+
+        // Buscamos al usuario borrado para verificar que se ha borrado
+        const existUser = await User.findById(userId);
+
+        // Si el usuario no existe, se ha borrado correctamente
         if (!existUser) {
-        // Borrado de imagen si no es la que tiene por defecto
-        req.user.image !==
-        "https://res.cloudinary.com/ddte4t4qb/image/upload/v1707769249/user_456212_amdsyd.png" &&
-        deleteImgCloudinary(req.user.image);
-        // Respuesta correcta - user borrado
-            return res.status(200).json("User borrado");
+            // Actualización de modelos que contengan el usuario borrado
+            try {
+                
+                await Projects.updateMany(
+                    { user: userId },
+                    { $pull: { user: userId } }
+                );
+
+                await Division.updateMany(
+                    { user: userId },
+                    { $pull: { user: userId } }
+                );
+
+                // Respuesta correcta - usuario borrado
+                return res.status(200).json("Usuario borrado");
+            } catch (error) {
+                // Error en la actualización de los modelos projects y divisions           
+                return res.status(409).json({
+                    error: "Error al eliminar usuario de los modelos projects y divisions",
+                    message: error.message,
+                });
+            }
         } else {
-            // Error user no borrado
+            // Error usuario no borrado
             return res.status(409).json({ error: "Error en el borrado" });
         }
     } catch (error) {
+        //error general del inicio (try)
         return res.status(409).json({
-            error: "Error general borrando el user", message: error.message});
+            error: "Error general borrando el usuario",
+            message: error.message,
+        });
     }
-  };
+};
 
+    
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //?----------------------------------------------------------- GET - GET ALL -------------------------------------------------------------------------------------------
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------------------

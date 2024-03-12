@@ -20,7 +20,7 @@ UserRoutes.get("/getAll/", getAll);
 
 UserRoutes.patch("/changePassword", [isAuth], changePassword);
 UserRoutes.patch("/updateUser", [isAuthAdmin], upload.single("image"), updateUser); //Solo puede actualizar un admin -- Para poder cambiar la imagen debo añadir el multer upload.single
-UserRoutes.delete("/deleteUser", [isAuthGerente], deleteUser); //Solo puede eliminar un super rol
+UserRoutes.post("/deleteUser", [isAuthGerente], deleteUser);
 
 //?----------------------------------------- Controladores usados por redirect---------------------------------------------------------------------
 
