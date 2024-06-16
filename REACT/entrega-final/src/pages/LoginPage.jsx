@@ -4,7 +4,10 @@ import { useAuth } from "../hooks/useAuth";
 
  const LoginPage = () => { 
     const { login } = useAuth();
-    const [userLogin, setUserLogin] = useState("");
+    const [userLogin, setUserLogin] = useState({
+        email: "",
+        password: "",
+    });
 
     //Función para manejar los inputs
     const handleInput = (ev) => {

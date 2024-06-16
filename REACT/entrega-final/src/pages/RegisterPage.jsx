@@ -6,7 +6,12 @@ import axios from "axios";
 const RegisterPage = () => {
     const navigate = useNavigate();
     const { register } = useAuth();
-    const [userRegister, setUserRegister] = useState("");
+    const [userRegister, setUserRegister] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
     
     const handleInput = (ev) => {
         const { name, value } = ev.target;
@@ -14,12 +19,14 @@ const RegisterPage = () => {
     };
     const registerCustom = async (userRegister) => {
         try { //! Consultar
-            await axios.post("http://localhost:8081/api/v1/user/register", userRegister);
+            const response = await axios.post("http://localhost:8081/api/v1/user/registerRedirect", userRegister);
+            console.log("Usuario registrado correctamente", response.data);
             navigate("/login");
         } catch (error) {
-            console.error("error al registrar el usuario", error);
+            console.error("error al registrar el usuario", 
+                error.response ? error.response.data : error.message);
         }
-    }
+    };
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
@@ -27,13 +34,13 @@ const RegisterPage = () => {
             alert("Las contraseñas no coinciden");
             return;
         }
-        register(userRegister);
+        registerCustom(userRegister);
     };
     
     return (
         <div>
         <h1>Register</h1>
-        <form onSubmit={handleSubmit(registerCustom)}>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="name">
             <input
                 type="text"
@@ -61,6 +68,16 @@ const RegisterPage = () => {
                 id="password"
                 required
                 value={userRegister.password}
+                onChange={handleInput}
+            />
+            </label>
+            <label htmlFor="confirmPassword">
+            <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                required
+                value={userRegister.confirmPassword}
                 onChange={handleInput}
             />
             </label>

@@ -21,6 +21,7 @@ const ProtectedLayout = () => {
         pages={[
           { label: "Settings", path: "settings" },
           { label: "Profile", path: "profile" },
+          { label: "Projects", path: "projects" },
         ]}
       />
       {outlet}

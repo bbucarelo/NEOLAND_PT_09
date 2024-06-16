@@ -133,9 +133,8 @@ export const ProjectsPage = () => {
                     />
                 </label>
                 <button type="submit">Create Project</button>
-                <button onClick={logout}>Logout</button>
+                
             </form>
-            <Link to="/projects">{"¿No tienes una cuenta? Registrate"}</Link>
         </div>
     );
 }
