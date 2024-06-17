@@ -20,8 +20,7 @@ function App() {
         <Route path='/register' element={<RegisterPage/>} />
       </Route>
       {/* Aquí van las rutas de la aplicación privadas */}
-      <Route element={<ProtectedLayaout /> }>
-      <Route path='/dashboard/*' element={<HomeLayout/>} />
+      <Route path='/dashboard/*' element={<ProtectedLayaout/>}>
         <Route path='profile' element={<ProfilePage/>} />
         <Route path='projects' element={<ProjectsPage/>} />
         <Route path='settings' element={<SettingsPage/>} />

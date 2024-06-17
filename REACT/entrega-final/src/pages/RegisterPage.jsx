@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const { register } = useAuth();
     const [userRegister, setUserRegister] = useState({
         name: "",
         email: "",

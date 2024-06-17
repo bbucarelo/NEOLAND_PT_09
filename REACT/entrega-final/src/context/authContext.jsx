@@ -15,13 +15,16 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
     const navigate = useNavigate();
 
         //Función login para actualizar el estado del usuario 
+        //! Meter la validación de los usuarios 
     const login = async (data) => {
+        // Si existe el usuario, lo guardamos en el estado y hacemos la validación con el back
         setUser(data);
-        //Lo devolvemos a su perfil
-        navigate("/dashboard/profile", { replace: true }); 
+        navigate("/dashboard/profile", { replace: true });
     };
 
+
     const register = async (data) => {
+        //!Aquí igual que en login, añadir la validación de los usuarios
         const registeredUsers = JSON.parse(localStorage.getItem('users')) || [];
         registeredUsers.push(data);
         localStorage.setItem('users', JSON.stringify(registeredUsers));
