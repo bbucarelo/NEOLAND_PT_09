@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-
+//!REHACER
 const ConfirmationUser = () => {
   //Declaramos el estado del código de confirmación y su función para cambiarlo
   const [confirmationCode, setConfirmationCode] = useState("");
   //Declaramos el navigate para redirigir al usuario
   const navigate = useNavigate();
   
-  const { user, confirmUser } = useAuth();
+
 
   //Función para confirmar el usuario
   const handleConfirm = async () => {

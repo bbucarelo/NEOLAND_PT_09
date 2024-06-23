@@ -16,10 +16,10 @@ const RegisterPage = () => {
         setUserRegister({ ...userRegister, [name]: value });
     };
     const registerCustom = async (userRegister) => {
-        try { //! Consultar
+        try { 
             const response = await axios.post("http://localhost:8081/api/v1/user/registerRedirect", userRegister);
             console.log("Usuario registrado correctamente", response.data);
-            navigate("/login");
+            navigate("/confirmationCode");
         } catch (error) {
             console.error("error al registrar el usuario", 
                 error.response ? error.response.data : error.message);
@@ -81,7 +81,7 @@ const RegisterPage = () => {
             </label>
             <button type="submit">Register</button>
         </form>
-        <Link to="/login">{"¿Ya tienes una cuenta? Inicia sesión"}</Link>
+        <Link to="/login">Login</Link>
         </div>
     );
 };

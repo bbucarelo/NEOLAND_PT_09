@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { NewAppBar2 } from "./NewAppBar2";
 
 
-const ProtectedLayout = () => {
+const ProtectedLayaout = () => {
   const { user } = useAuth();
   const outlet = useOutlet();
 
@@ -22,6 +22,7 @@ const ProtectedLayout = () => {
           { label: "Settings", path: "settings" },
           { label: "Profile", path: "profile" },
           { label: "Projects", path: "projects" },
+          { label: "Divisions", path: "divisions" },
         ]}
       />
       {outlet}
@@ -29,4 +30,4 @@ const ProtectedLayout = () => {
   );
 };
 
-export default ProtectedLayout;
+export default ProtectedLayaout;

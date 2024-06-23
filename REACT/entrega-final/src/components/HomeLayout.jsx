@@ -22,6 +22,7 @@ const HomeLayout = () => {
                 { path: "/", label: "Home" },
                 {path: "/login", label: "Login" }, 
                 { path: "/register", label: "Register" },
+                {path: "/confirmationCode", label: "Confirmation Code"},
             ]}
         />
         {outlet}

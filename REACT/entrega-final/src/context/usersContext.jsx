@@ -14,7 +14,6 @@ export const UsersProvider = ({ children }) => {
         
         const getUsers = async () => {
             try {
-                //AXIOS: Librería para hacer peticiones HTTP desde el navegador
                 const response = await axios.get("http://localhost:8081/api/v1/user/getAll");
                 //Actualizamos el estado de los usuarios
                 setUsers(response.data);
@@ -29,8 +28,9 @@ export const UsersProvider = ({ children }) => {
 
     return (
         //Devolvemos el provider con el valor de los usuarios obtenidos
-        <UsersContext.Provider value={users}>
+        <UsersContext.Provider value={{users}}>
             {children}
         </UsersContext.Provider>
     );
 };
+
