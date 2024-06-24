@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, act } from "react";
 import axios from "axios";
 
 export const ProjectsContext = createContext();
@@ -9,8 +9,15 @@ const projectsReducer = (state, action) => {
             return action.payload;
         case "ADD_PROJECT":
             return [...state, action.payload];
-        case "UPDATE_PROJECT":
-            return state.map(project => project._id === action.payload._id ? action.payload : project);
+        case "UPDATE_PROJECT": {
+            const updatedProject = action.payload.update;  
+            return state.map(project => {
+                if (project._id === updatedProject._id) {
+                    return updatedProject;
+                }
+                return project;
+            }); 
+        }
         case "DELETE_PROJECT":
             return state.filter(project => project._id !== action.payload);
         default:
@@ -44,9 +51,9 @@ export const ProjectsProvider = ({ children }) => {
 
     const updateProject = async (id, project) => {
         try {
-            console.log("Updating project:", id, project);
             const response = await axios.patch(`http://localhost:8081/api/v1/projects/update/${id}`, project);
             dispatch({ type: "UPDATE_PROJECT", payload: response.data });
+            console.log("response", response);
         } catch (error) {
             console.error("Error al actualizar el proyecto", error);
             throw error;

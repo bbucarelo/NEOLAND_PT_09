@@ -4,7 +4,7 @@ import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } 
 
 
 const FormDivisions = ({ division, handleCloseForm }) => {
-  const { addDivision, updateDivision, deleteDivision } = useContext(DivisionsContext);
+  const { addDivision, updateDivision } = useContext(DivisionsContext);
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -45,12 +45,7 @@ const FormDivisions = ({ division, handleCloseForm }) => {
     handleCloseForm();
   };
 
-  const handleDelete = () => {
-    if (division) {
-      deleteDivision(division._id);
-      handleCloseForm();
-    }
-  };
+  
 
   return (
     <Dialog open={true} onClose={handleCloseForm}>
@@ -88,16 +83,6 @@ const FormDivisions = ({ division, handleCloseForm }) => {
         />
       </DialogContent>
       <DialogActions>
-        {division && (
-          <>
-            <Button onClick={handleDelete} color="error">
-              Delete
-            </Button>
-            <Button onClick={() => alert("Update functionality")} color="primary">
-              Update
-            </Button>
-          </>
-        )}
         <Button onClick={handleCloseForm} color="inherit">
           Cancel
         </Button>

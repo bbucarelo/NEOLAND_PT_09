@@ -6,13 +6,19 @@ export const DivisionsContext = createContext();
 const divisionsReducer = (state, action) => {
   switch (action.type) {
     case "GET_DIVISIONS":
+      console.log("action.payload", action.payload);
       return action.payload;
     case "ADD_DIVISION":
       return [...state, action.payload];
-    case "UPDATE_DIVISION":
-      return state.map((division) =>
-        division._id === action.payload._id ? action.payload : division
-      );
+    case "UPDATE_DIVISION": {
+      const updatedDivision = action.payload.update;
+      return state.map(division => {
+        if (division._id === updatedDivision._id) {
+          return updatedDivision;
+        }
+        return division;
+      });
+    }
     case "DELETE_DIVISION":
       return state.filter((division) => division._id !== action.payload);
     default:
@@ -48,6 +54,7 @@ export const DivisionsProvider = ({ children }) => {
     try {
       const response = await axios.patch(`http://localhost:8081/api/v1/division/update/${id}`, division);
       dispatch({ type: "UPDATE_DIVISION", payload: response.data });
+      console.log("response", response);
     } catch (error) {
       console.error("Error al actualizar la división", error);
     }

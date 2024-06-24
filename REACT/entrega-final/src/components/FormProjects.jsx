@@ -14,7 +14,7 @@ const FormProjects = ({ open, handleClose, initialData }) => {
     useEffect(() => {
         if (initialData) {
             setProjectData(initialData);
-        }
+        } 
     }, [initialData]);
 
     const handleChange = (e) => {
@@ -22,9 +22,8 @@ const FormProjects = ({ open, handleClose, initialData }) => {
         setProjectData({ ...projectData, [name]: value });
     };
 
+    
     const handleSubmit = async () => {
-       
-        console.log("Project data on submit:", projectData);
         if (projectData._id) {
             try {
                 await updateProject(projectData._id, projectData);
