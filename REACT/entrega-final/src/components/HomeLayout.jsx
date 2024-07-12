@@ -1,8 +1,9 @@
+
 //Hacemos las importaciones correspondientes, traemos el contexto con el customHook
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { NewAppBar2 } from "./NewAppBar2";
-
+import Header from "./Header";
+import Footer from "./Footer";
 
 
 const HomeLayout = () => {
@@ -14,18 +15,20 @@ const HomeLayout = () => {
   if (user) {
     return <Navigate to='/dashboard/profile' replace />;
   }
+
 // especificamos las props para indicar a donde se debe redirigir
   return (
     <div>
-        <NewAppBar2
+        <Header onDrawerToggle={() => {}}
             pages={[
-                { path: "/", label: "Home" },
-                {path: "/login", label: "Login" }, 
-                { path: "/register", label: "Register" },
-                {path: "/confirmationCode", label: "Confirmation Code"},
+                { path: "/", label: "Inicio" },
+                {path: "/login", label: "Inicia Sesión" }, 
+                { path: "/register", label: "Registrate" },
+                
             ]}
         />
         {outlet}
+        <Footer />
     </div>
   );
 };

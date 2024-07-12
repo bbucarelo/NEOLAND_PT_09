@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/authContext.jsx'
 import { ProjectsProvider } from './context/projectsContext.jsx'
 import { DivisionsProvider } from './context/divisionsContext.jsx'
+import { UsersProvider } from './context/usersContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <ProjectsProvider>
           <DivisionsProvider>
-        <App />
+            <UsersProvider>
+                <App />
+            </UsersProvider>
           </DivisionsProvider>
       </ProjectsProvider>
       </AuthProvider>

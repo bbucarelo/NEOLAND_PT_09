@@ -1,8 +1,9 @@
+
 //Hacemos las importaciones respectivas
 //outlet es la referencia de las rutas anidadas, hacemos las comprobaciones al usuario
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { NewAppBar2 } from "./NewAppBar2";
+import Header from "./Header";
 
 
 const ProtectedLayaout = () => {
@@ -17,12 +18,12 @@ const ProtectedLayaout = () => {
   //si existe el usuario le redirigimos a la ruta
   return (
     <div>
-      <NewAppBar2
+      <Header onDrawerToggle={() => {}}
         pages={[
-          { label: "Settings", path: "settings" },
-          { label: "Profile", path: "profile" },
-          { label: "Projects", path: "projects" },
-          { label: "Divisions", path: "divisions" },
+          { label: "Configuración", path: "settings" },
+          { label: "Perfil", path: "profile" },
+          { label: "Proyectos", path: "proyectos" },
+          { label: "Divisiones", path: "divisions" },
         ]}
       />
       {outlet}

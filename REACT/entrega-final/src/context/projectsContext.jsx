@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect, act } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 
 export const ProjectsContext = createContext();
@@ -11,18 +11,18 @@ const projectsReducer = (state, action) => {
             return [...state, action.payload];
         case "UPDATE_PROJECT": {
             const updatedProject = action.payload.update;  
-            return state.map(project => {
-                if (project._id === updatedProject._id) {
-                    return updatedProject;
-                }
-                return project;
-            }); 
+            return state.map(project => 
+                project._id === updatedProject._id ? updatedProject : project
+            ); 
         }
         case "DELETE_PROJECT":
             return state.filter(project => project._id !== action.payload);
         default:
             return state;
+        
+
     }
+            
 };
 
 export const ProjectsProvider = ({ children }) => {
@@ -69,8 +69,9 @@ export const ProjectsProvider = ({ children }) => {
         }
     };
 
+    
     return (
-        <ProjectsContext.Provider value={{ projects, addProject, updateProject, deleteProject }}>
+        <ProjectsContext.Provider value={{ projects, addProject, updateProject, deleteProject}}>
             {children}
         </ProjectsContext.Provider>
     );
